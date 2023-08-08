@@ -481,7 +481,7 @@ shapes.forEach((shape) => {
         } else {
           shapes = [];
         }
-        console.log('history',history,'shapes',shapes);
+        //console.log('history',history,'shapes',shapes);
         points = [];
         draw();
         //console.log(points);
@@ -493,12 +493,12 @@ shapes.forEach((shape) => {
         //const nextState = history.shift();
         //shapes.length = 0; // Clear the shapes array
         shapes.push(...nextState); // Add shapes from the next state
-        console.log(nextState);
+        //console.log(nextState);
         if(history[history.length-1]!==nextState){
           history.push(nextState);
         }
         draw();
-        console.log(history);
+        //console.log(history);
       }
     }
     
