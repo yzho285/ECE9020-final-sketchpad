@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Drawing Program</title>
+</head>
+<body>
+  <canvas id="canvas" width="800" height="600" style="border: 1px solid #000;"></canvas>
+  <div>
+    <label>Color:</label>
+    <input type="color" id="colorPicker">
+    <button onclick="changeMode('freehand')">Freehand</button>
+    <button onclick="changeMode('line')">Line</button>
+    <button onclick="changeMode('rectangle')">Rectangle</button>
+    <button onclick="changeMode('ellipse')">Ellipse</button>
+    <button onclick="changeMode('square')">Square</button>
+    <button onclick="changeMode('circle')">Circle</button>
+    <button onclick="changeMode('polygon')">Polygon</button>
+    <button onclick="selectMode()">Select</button>
+    <button onclick="deleteSelected()">Delete</button>
+    <button onclick="copySelected()">Copy</button>
+    <button onclick="pasteSelected()">Paste</button>
+    <button id="groupButton">Group</button>
+    <button id="ungroupButton">Ungroup</button>
+    <button id="undoButton">Undo</button>
+    <button id="redoButton">Redo</button>
+  </div>
+  <script src="sketchpad.js"></script>
+</body>
+</html>
