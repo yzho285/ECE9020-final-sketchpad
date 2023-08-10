@@ -273,12 +273,49 @@ shapes.forEach((shape) => {
         if (index === selectedShapeIndex) {
             ctx.strokeStyle = '#00F';
             ctx.lineWidth = 3;
-            ctx.strokeRect(
-              Math.min(shape.points[0].x, shape.points[shape.points.length-1].x),
-              Math.min(shape.points[0].y, shape.points[shape.points.length-1].y),
-              Math.abs(shape.points[shape.points.length-1].x - shape.points[0].x),
-              Math.abs(shape.points[shape.points.length-1].y - shape.points[0].y)
-            );
+            // ctx.strokeRect(
+            //   Math.min(shape.points[0].x, shape.points[shape.points.length-1].x),
+            //   Math.min(shape.points[0].y, shape.points[shape.points.length-1].y),
+            //   Math.abs(shape.points[shape.points.length-1].x - shape.points[0].x),
+            //   Math.abs(shape.points[shape.points.length-1].y - shape.points[0].y)
+            // );
+            if (shape.type === 'freehand') {
+              ctx.moveTo(shape.points[0].x, shape.points[0].y);
+              shape.points.forEach((point) => {
+                ctx.lineTo(point.x, point.y);
+              });
+            } else if (shape.type === 'line') {
+              ctx.moveTo(shape.points[0].x, shape.points[0].y);
+              ctx.lineTo(shape.points[shape.points.length-1].x, shape.points[shape.points.length-1].y);
+            } else if (shape.type === 'rectangle') {
+              ctx.rect(shape.points[0].x, shape.points[0].y, shape.points[shape.points.length-1].x - shape.points[0].x, shape.points[shape.points.length-1].y - shape.points[0].y);
+            } else if (shape.type === 'ellipse') {
+              const radiusX = Math.abs(shape.points[shape.points.length-1].x - shape.points[0].x) / 2;
+              const radiusY = Math.abs(shape.points[shape.points.length-1].y - shape.points[0].y) / 2;
+              const centerX = shape.points[0].x + radiusX;
+              const centerY = shape.points[0].y + radiusY;
+              ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+            } else if (shape.type === 'square') {
+                if (shape.points.length >= 2) {
+                  const sideLength = Math.min(Math.abs(shape.points[shape.points.length-1].x - shape.points[0].x), Math.abs(shape.points[shape.points.length-1].y - shape.points[0].y));
+                  //ctx.strokeStyle = shape.color;
+                  ctx.strokeRect(shape.points[0].x, shape.points[0].y, sideLength, sideLength);
+                }
+            } else if (shape.type === 'circle') {
+                if (shape.points.length >= 2) {
+                  shape.radius = Math.sqrt(Math.pow(shape.points[shape.points.length-1].x - shape.points[0].x, 2) + Math.pow(shape.points[shape.points.length-1].y - shape.points[0].y, 2));
+                  ctx.beginPath();
+                  ctx.arc(shape.points[0].x, shape.points[0].y, shape.radius, 0, 2 * Math.PI);
+                  //ctx.strokeStyle = shape.color;
+                  ctx.stroke();
+                }
+            } else if (shape.type === 'polygon') {
+              ctx.moveTo(shape.points[0].x, shape.points[0].y);
+              shape.points.forEach((point) => {
+                ctx.lineTo(point.x, point.y);
+              });
+            }
+            ctx.stroke();
             ctx.lineWidth = 1;
           }
       });
